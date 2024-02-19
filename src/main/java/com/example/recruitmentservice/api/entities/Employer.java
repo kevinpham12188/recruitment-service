@@ -13,7 +13,6 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class Employer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
