@@ -1,12 +1,15 @@
 package com.example.recruitmentservice.api.dto.dtoOut;
 
+import com.example.recruitmentservice.api.entities.Employer;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class EmployerDtoOut {
     private Long id;
     private String email;
@@ -14,4 +17,14 @@ public class EmployerDtoOut {
     private Integer provinceId;
     private String provinceName;
     private String description;
+
+    public static EmployerDtoOut from(Employer employer) {
+        return EmployerDtoOut.builder()
+                .id(employer.getId())
+                .email(employer.getEmail())
+                .name(employer.getName())
+                .provinceId(employer.getProvince())
+                .description(employer.getDescription())
+                .build();
+    }
 }

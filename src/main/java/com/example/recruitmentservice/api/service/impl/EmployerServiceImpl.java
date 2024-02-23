@@ -1,5 +1,7 @@
 package com.example.recruitmentservice.api.service.impl;
 
+import com.example.recruitmentservice.api.dto.dtoIn.EmployerDtoIn;
+import com.example.recruitmentservice.api.dto.dtoOut.EmployerDtoOut;
 import com.example.recruitmentservice.api.entities.Employer;
 import com.example.recruitmentservice.api.repository.EmployerRepository;
 import com.example.recruitmentservice.api.service.EmployerService;
@@ -17,10 +19,22 @@ public class EmployerServiceImpl implements EmployerService {
         this.employerRepository = employerRepository;
     }
 
-    /* Get all employers */
-    public List<Employer> getAllEmployers() {
-        return employerRepository.findAll();
+    /* Create employer */
+    @Override
+    public EmployerDtoOut createEmployer(EmployerDtoIn employerDtoIn) {
+        Employer employer = employerRepository.save(
+                Employer.builder()
+                        .email(employerDtoIn.getEmail())
+                        .name(employerDtoIn.getName())
+                        .province(employerDtoIn.getProvinceId())
+                        .description(employerDtoIn.getDescription())
+                        .build()
+        );
+        return EmployerDtoOut.from(employer);
     }
+
+
+
 
 
 

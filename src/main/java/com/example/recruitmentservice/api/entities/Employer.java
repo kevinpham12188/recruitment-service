@@ -13,9 +13,10 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Employer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name="EMAIL", unique = true, length = 255)
@@ -25,7 +26,7 @@ public class Employer {
     private String name;
 
     @Column(name = "PROVINCE")
-    private Integer provinceId;
+    private Integer province;
 
     @Column(name = "DESCRIPTION")
     private String description;
