@@ -17,14 +17,14 @@ public class ResumeDtoOut {
     private Long id;
     private String career_obj;
     private String title;
-    private Long seeker_id;
+    private Long seekerId;
 
     public static ResumeDtoOut from(Resume resume) {
         return ResumeDtoOut.builder()
                 .id(resume.getId())
                 .career_obj(resume.getCareer_obj())
                 .title(resume.getTitle())
-                .seeker_id(resume.getSeeker_id())
+                .seekerId(resume.getSeekerId())
                 .build();
     }
 }

@@ -21,5 +21,5 @@ public class ResumeDtoIn {
     private String title;
 
     @NotNull
-    private Long seeker_id;
+    private Long seekerId;
 }

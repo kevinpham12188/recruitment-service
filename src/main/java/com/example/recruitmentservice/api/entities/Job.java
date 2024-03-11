@@ -19,8 +19,8 @@ public class Job {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "EMPLOYER_ID")
-    private Long employer_id;
+    @Column(name = "EMPLOYERID")
+    private Long employerId;
 
     @Column(name = "TITLE")
     private String title;

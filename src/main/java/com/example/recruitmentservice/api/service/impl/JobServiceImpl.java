@@ -14,6 +14,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 @Service
 public class JobServiceImpl implements JobService {
     private JobRepository jobRepository;
@@ -28,7 +30,7 @@ public class JobServiceImpl implements JobService {
         Job job = jobRepository.save(
                 Job.builder()
                         .title(jobDtoIn.getTitle())
-                        .employer_id(jobDtoIn.getEmployerId())
+                        .employerId(jobDtoIn.getEmployerId())
                         .quantity(jobDtoIn.getQuantity())
                         .description(jobDtoIn.getDescription())
                         .fields(jobDtoIn.getFieldIds())
@@ -57,7 +59,7 @@ public class JobServiceImpl implements JobService {
                 () -> new EntityNotFoundException("Job, " + id + " , does not exist.")
         );
         job.setTitle(jobDtoIn.getTitle());
-        job.setEmployer_id(jobDtoIn.getEmployerId());
+        job.setEmployerId(jobDtoIn.getEmployerId());
         job.setQuantity(jobDtoIn.getQuantity());
         job.setDescription(jobDtoIn.getDescription());
         job.setFields(jobDtoIn.getFieldIds());
@@ -91,5 +93,10 @@ public class JobServiceImpl implements JobService {
                 jobs.stream().map(JobDtoOut::from).toList());
     }
 
-
+    /* Get job by employer id */
+    @Override
+    public List<JobDtoOut> getJobByEmployerId(Long employerId) {
+        List<Job> jobs = jobRepository.getJobByEmployerId(employerId);
+        return jobs.stream().map(JobDtoOut::from).toList();
+    }
 }

@@ -32,5 +32,5 @@ public class Resume {
     private Date updated_at = new Date();
 
     @Column(name = "SEEKER_ID")
-    private Long seeker_id;
+    private Long seekerId;
 }

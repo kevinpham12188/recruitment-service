@@ -4,7 +4,6 @@ import com.example.recruitmentservice.api.dto.dtoIn.PageDtoIn;
 import com.example.recruitmentservice.api.dto.dtoIn.ResumeDtoIn;
 import com.example.recruitmentservice.api.dto.dtoOut.PageDtoOut;
 import com.example.recruitmentservice.api.dto.dtoOut.ResumeDtoOut;
-import com.example.recruitmentservice.api.dto.dtoOut.SeekerDtoOut;
 import com.example.recruitmentservice.api.entities.Resume;
 import com.example.recruitmentservice.api.repository.ResumeRepository;
 import com.example.recruitmentservice.api.service.ResumeService;
@@ -14,6 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ResumeServiceImpl implements ResumeService {
@@ -31,7 +32,7 @@ public class ResumeServiceImpl implements ResumeService {
                 Resume.builder()
                         .title(resumeDtoIn.getTitle())
                         .career_obj(resumeDtoIn.getCareer_obj())
-                        .seeker_id(resumeDtoIn.getSeeker_id())
+                        .seekerId(resumeDtoIn.getSeekerId())
                         .build()
         );
         return ResumeDtoOut.from(resume);
@@ -76,5 +77,12 @@ public class ResumeServiceImpl implements ResumeService {
                 pageDtoIn.getPageSize(),
                 resumes.getTotalElements(),
                 resumes.stream().map(ResumeDtoOut::from).toList());
+    }
+
+    /* Get resumes by seeker id */
+    @Override
+    public List<ResumeDtoOut> getResumeBySeekerId(Long seekerId) {
+        List<Resume> resumes = resumeRepository.getResumeBySeekerId(seekerId);
+        return resumes.stream().map(ResumeDtoOut::from).toList();
     }
 }

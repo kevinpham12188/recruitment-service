@@ -2,6 +2,7 @@ package com.example.recruitmentservice.api.controller;
 
 import com.example.recruitmentservice.api.dto.dtoIn.JobDtoIn;
 import com.example.recruitmentservice.api.dto.dtoIn.PageDtoIn;
+import com.example.recruitmentservice.api.dto.dtoOut.JobDtoOut;
 import com.example.recruitmentservice.api.service.JobService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 public class JobController extends AbstractResponseController {
@@ -69,6 +71,12 @@ public class JobController extends AbstractResponseController {
                     return jobService.listOfJobs(pageDtoIn);
                 }, 201, false
         );
+    }
+
+    /* Get job by employer id */
+    @GetMapping("/employer/{employerId}/jobs")
+    public List<JobDtoOut> getJobsByEmployerId(@PathVariable(value = "employerId") Long employerId) {
+        return jobService.getJobByEmployerId(employerId);
     }
 
 

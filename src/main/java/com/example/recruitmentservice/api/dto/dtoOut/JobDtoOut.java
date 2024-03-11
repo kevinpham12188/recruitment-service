@@ -34,7 +34,7 @@ public class JobDtoOut {
                 .provinces(job.getProvinces())
                 .salary(job.getSalary())
                 .expiredAt(job.getExpired_at())
-                .employerId(job.getEmployer_id())
+                .employerId(job.getEmployerId())
                 .build();
     }
 }

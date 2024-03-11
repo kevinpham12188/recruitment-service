@@ -2,6 +2,7 @@ package com.example.recruitmentservice.api.controller;
 
 import com.example.recruitmentservice.api.dto.dtoIn.PageDtoIn;
 import com.example.recruitmentservice.api.dto.dtoIn.ResumeDtoIn;
+import com.example.recruitmentservice.api.dto.dtoOut.ResumeDtoOut;
 import com.example.recruitmentservice.api.service.ResumeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 public class ResumeController extends AbstractResponseController{
@@ -70,4 +72,11 @@ public class ResumeController extends AbstractResponseController{
                 }, 200, false
         );
     }
+
+    /* Get resume by seeker id */
+    @GetMapping("/seeker/{seekerId}/resumes")
+    public List<ResumeDtoOut> getResumesBySeekerId(@PathVariable(value = "seekerId") Long seekerId) {
+        return resumeService.getResumeBySeekerId(seekerId);
+    }
+
 }
