@@ -11,6 +11,7 @@ import com.example.recruitmentservice.api.repository.EmployerRepository;
 import com.example.recruitmentservice.api.service.EmployerService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -30,6 +31,7 @@ public class EmployerServiceImpl implements EmployerService {
 
     /* Get employer by id */
     @Override
+    @Cacheable(key = "#id", value = "EMPLOYER")
     public EmployerDtoOut getEmployerById(Long id) {
         Employer employer = employerRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Employer, " + id + ", does not exist.")

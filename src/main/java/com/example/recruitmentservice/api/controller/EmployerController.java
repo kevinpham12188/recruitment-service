@@ -5,6 +5,7 @@ import com.example.recruitmentservice.api.dto.dtoIn.PageEmployerDtoIn;
 import com.example.recruitmentservice.api.service.EmployerService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
