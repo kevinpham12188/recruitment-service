@@ -9,6 +9,9 @@ import com.example.recruitmentservice.api.repository.JobRepository;
 import com.example.recruitmentservice.api.service.JobService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -44,6 +47,7 @@ public class JobServiceImpl implements JobService {
 
     /* Get job by id */
     @Override
+    @Cacheable(key = "#id", value = "JOB")
     public JobDtoOut getJobById(Long id) {
         Job job = jobRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Job, " + id + " , does not exist." )
@@ -54,6 +58,7 @@ public class JobServiceImpl implements JobService {
 
     /* Update job */
     @Override
+    @CachePut(key = "#id", cacheNames = "JOB")
     public JobDtoOut updateJob(Long id, JobDtoIn jobDtoIn) {
         Job job = jobRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Job, " + id + " , does not exist.")
@@ -73,6 +78,7 @@ public class JobServiceImpl implements JobService {
 
     /* Delete job*/
     @Override
+    @CacheEvict(key = "#id", cacheNames = "JOB", beforeInvocation = true)
     public void deleteJob(Long id) {
         Job job = jobRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Job, " + id + " , does not exist.")

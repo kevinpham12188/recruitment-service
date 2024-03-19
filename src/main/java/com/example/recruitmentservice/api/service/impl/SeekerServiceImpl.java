@@ -9,6 +9,9 @@ import com.example.recruitmentservice.api.repository.SeekerRepository;
 import com.example.recruitmentservice.api.service.SeekerService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -40,6 +43,7 @@ public class SeekerServiceImpl implements SeekerService {
 
     /* Get seeker by Id */
     @Override
+    @Cacheable(key = "#id", value = "SEEKER")
     public SeekerDtoOut getSeekerById(Long id) {
         Seeker seeker = seekerRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Seeker, " + id + " does not exist.")
@@ -50,6 +54,7 @@ public class SeekerServiceImpl implements SeekerService {
 
     /* Update seeker */
     @Override
+    @CachePut(key = "#id", cacheNames = "SEEKER")
     public SeekerDtoOut updateSeeker(Long id, SeekerDtoIn seekerDtoIn) {
         Seeker seeker = seekerRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Seeker, " + id + " does not exist.")
@@ -65,6 +70,7 @@ public class SeekerServiceImpl implements SeekerService {
 
     /* Delete seeker */
     @Override
+    @CacheEvict(key = "#id", cacheNames = "SEEKER", beforeInvocation = true)
     public void deleteSeeker(Long id) {
         Seeker seeker = seekerRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Seeker, " + id + " does not exist.")

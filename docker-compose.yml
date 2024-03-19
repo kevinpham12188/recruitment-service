@@ -1,0 +1,18 @@
+version: '3.3'
+
+services:
+  sample-service:
+    image: kevin/recruiter_service:0.0.1
+    environment:
+      SPRING_DATASOURCE_URL: 'jdbc:mysql://host.docker.internal:3306/recruitment_service'
+      SPRING_DATASOURCE_USERNAME: 'root'
+      SPRING_DATASOURCE_PASSWORD: 'Ngonngon121@'
+      SPRING_JPA_HIBERNATE_DDLAUTO: 'update'
+      SRING_DATA_REDIS_HOST: 'host.docker.internal'
+      SPRING_DATA_REDIS_PORT: '6379'
+      SPRING_DATA_REDIS_PASSWORD: 'Redis@123'
+    ports:
+      - '8080:8080'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: on-failure

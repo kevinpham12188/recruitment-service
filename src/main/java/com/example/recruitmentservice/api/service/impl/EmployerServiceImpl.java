@@ -11,6 +11,8 @@ import com.example.recruitmentservice.api.repository.EmployerRepository;
 import com.example.recruitmentservice.api.service.EmployerService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -55,6 +57,7 @@ public class EmployerServiceImpl implements EmployerService {
 
     /* Update Employer */
     @Override
+    @CachePut(cacheNames = "EMPLOYER", key = "#id")
     public EmployerDtoOut updateEmployer(Long id, EmployerDtoIn employerDtoIn) {
         Employer employer = employerRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("employer, " + id + " does not exist.")
@@ -89,6 +92,7 @@ public class EmployerServiceImpl implements EmployerService {
 
     /* Delete employer*/
     @Override
+    @CacheEvict(cacheNames = "EMPLOYER", key = "#id", beforeInvocation = true)
     public void deleteEmployer(Long id) {
         Employer employer = employerRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("employer, " + id + " does not exist.")
@@ -96,6 +100,4 @@ public class EmployerServiceImpl implements EmployerService {
         employerRepository.delete(employer);
 
     }
-
-
 }

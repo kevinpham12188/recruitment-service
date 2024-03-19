@@ -9,6 +9,9 @@ import com.example.recruitmentservice.api.repository.ResumeRepository;
 import com.example.recruitmentservice.api.service.ResumeService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -38,8 +41,9 @@ public class ResumeServiceImpl implements ResumeService {
         return ResumeDtoOut.from(resume);
     }
 
-    /* Get resume by id*/
+    /* Get resume by id */
     @Override
+    @Cacheable(key = "#id", value = "RESUME")
     public ResumeDtoOut getResumeById(Long id) {
         Resume resume = resumeRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Resume, " + id + ", does not exist")
@@ -49,6 +53,7 @@ public class ResumeServiceImpl implements ResumeService {
 
     /* Update resume */
     @Override
+    @CachePut(key = "#id", cacheNames = "RESUME")
     public ResumeDtoOut updateResume(Long id, ResumeDtoIn resumeDtoIn) {
         Resume resume = resumeRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Resume, " + id + ", does not exist")
@@ -61,6 +66,7 @@ public class ResumeServiceImpl implements ResumeService {
 
     /* Delete resume */
     @Override
+    @CacheEvict(key = "id", cacheNames = "RESUME", beforeInvocation = true)
     public void deleteResume(Long id) {
         Resume resume = resumeRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Resume, " + id + ", does not exist")

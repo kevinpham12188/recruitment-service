@@ -1,6 +1,6 @@
 package com.example.recruitmentservice.api.dto.dtoIn;
 
-import jakarta.persistence.Column;
+//import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
